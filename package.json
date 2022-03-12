@@ -1,0 +1,28 @@
+{
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "inquirer": "^8.2.1"
+  },
+  "name": "staff_tracker",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSeddon01/Staff_Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSeddon01/Staff_Tracker/issues"
+  },
+  "homepage": "https://github.com/CSeddon01/Staff_Tracker#readme"
+}
