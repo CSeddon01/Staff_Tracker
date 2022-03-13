@@ -82,7 +82,25 @@ function viewAllEmployees() {
     console.table(result)
     employeeDB();
   })
-}
+};
 
+function viewAllRoles() {
+  db.query("SELECT roles.id, roles.title, roles.salary, department.name AS department, department.id FROM roles JOIN department ON roles.id = department.id",  
+  function (err, result) {
+    if (err) throw err;
+    console.log("----------Employee List----------");
+    console.table(result)
+    employeeDB();
+  })
+};
 
-   
+function viewAllDepartments() {
+  db.query("SELECT department.id, department.name AS department FROM department",  
+  function (err, result) {
+    if (err) throw err;
+    console.log("----------Employee List----------");
+    console.table(result)
+    employeeDB();
+  })
+};   
+
