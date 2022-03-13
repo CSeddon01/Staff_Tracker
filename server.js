@@ -66,7 +66,7 @@ function employeeDB() {
         addDepartment();
       break;
 
-      case "Exit":
+      case "Quit":
         console.log("Bye");
       break;
     }
@@ -75,7 +75,7 @@ function employeeDB() {
 };
 
 function viewAllEmployees() {
-  db.query("SELECT * FROM employee",  
+  db.query("SELECT employee.role_id, employee.first_name, employee.last_name, roles.title, roles.salary, employee.manager_id FROM employee JOIN roles ON employee.id = roles.id",  
   function (err, result) {
     if (err) throw err;
     console.log("----------Employee List----------");
