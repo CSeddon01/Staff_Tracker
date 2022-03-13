@@ -1,3 +1,6 @@
+
+-- Creating tables for departement, roles, and employees
+
 DROP DATABASE IF EXISTS employees;
 CREATE DATABASE employees;
 

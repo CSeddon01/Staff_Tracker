@@ -1,3 +1,5 @@
+-- Created information to seed the database
+
 INSERT INTO department 
     (name)
 VALUES        
