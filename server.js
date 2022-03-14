@@ -31,7 +31,7 @@ function employeeDB() {
     name: "newQuery", 
     type: "list", 
     message: "What would you like to do?", 
-    choices: ["View All Employees", "Add Employee", "Update Employee Role", new inquirer.Separator(), "View All Roles", "Add Role",  new inquirer.Separator(), "View All Departments", "Add Department", "Exit"],
+    choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role",  "View All Departments", "Add Department", "View Budget", "Update Manager", "Exit", new inquirer.Separator()],
     },
     
   ])
@@ -66,6 +66,14 @@ function employeeDB() {
         addDepartment();
       break;
 
+      case "View Budget":
+        viewBudget();
+      break;
+
+      case "Update Manager":
+        updateManager();
+      break;
+
       case "Exit":
         quitBD();
       break;
@@ -89,7 +97,7 @@ function viewAllRoles() {
   db.query("SELECT roles.id, roles.title, roles.salary, department.name AS department, department.id FROM roles JOIN department ON roles.id = department.id",  
   function (err, result) {
     if (err) throw err;
-    console.log("----------Employee List----------");
+    console.log("----------Role List----------");
     console.table(result)
     employeeDB();
   })
@@ -99,7 +107,7 @@ function viewAllDepartments() {
   db.query("SELECT department.id, department.name AS department FROM department",  
   function (err, result) {
     if (err) throw err;
-    console.log("----------Employee List----------");
+    console.log("----------Department List----------");
     console.table(result)
     employeeDB();
   })
@@ -182,7 +190,7 @@ function addDepartment() {
     }) 
   })
 };
-//Update employee
+//Update employee role
 function updateEmployeeRole() {
   db.query("SELECT * FROM employee", (err, res) => {
     if (err) throw err;
@@ -219,6 +227,54 @@ function updateEmployeeRole() {
     });
 });
 })};
+//Update employee manager
+function updateManager() {
+  db.query("SELECT * FROM employee", (err, res) => {
+    if (err) throw err;
+ 
+  inquirer.prompt([
+   {
+     name: "selectEmp",
+     type: "list", 
+     message: "Which employee would you like to update?",
+     choices: res.map(res => res.role_id + " " + res.first_name + " " + res.last_name)
+   },
+  ]).then(employee => {
+    let empdId = employee.selectEmp.split('')[0];
+
+    db.query("SELECT * FROM employee", (err, res) => {
+      if (err) throw err;
+      inquirer.prompt([
+        {
+          name: "newManager", 
+          type: "list", 
+          message: "What is the new role id:",
+          choices: ["1", "2", "3", "4", "5"]
+        },
+      ]).then(newManager => {
+        let managerId = newManager.newManager.split("")[0];
+        console.log("New manager role id changed to:" + managerId);
+        db.query("UPDATE employee SET manager_id = ? WHERE id = ?", [managerId, empdId],
+        (err, res) => {
+          if (err) throw err;
+        }
+        );
+        employeeDB();
+      });
+    });
+});
+})};
+
+//function to view budget 
+function viewBudget() {
+  db.query("SELECT SUM(salary) FROM roles",  
+  function (err, result) {
+    if (err) throw err;
+    console.log("----------Department Budget----------");
+    console.table(result)
+    employeeDB();
+  })
+};   
 
 //function to exit database   
 function quitBD() {
