@@ -66,8 +66,8 @@ function employeeDB() {
         addDepartment();
       break;
 
-      case "Quit":
-        console.log("Bye");
+      case "Exit":
+        quitBD();
       break;
     }
   });
@@ -219,3 +219,9 @@ function updateEmployeeRole() {
     });
 });
 })};
+
+//function to exit database   
+function quitBD() {
+  console.log("Bye");
+  db.end();
+};
