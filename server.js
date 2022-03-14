@@ -121,13 +121,13 @@ function addEmployee() {
      {
        name: "role_id", 
        type: "list", 
-       message: "Select role of new employee:", 
+       message: "Select role of new employee: 1. Accountant, 2. Administrator 3. Sales 4. Customer Service 5. Legal", 
        choices: ["1", "2", "3", "4", "5"]
      },
      {
        name: "manager_id",
        type: "list",
-       message: "Select manager id:",
+       message: "Select manager id: ",
        choices: ["1", "2", "3", "4", "5"]
      },
    ]).then(function(answer) {
@@ -135,6 +135,33 @@ function addEmployee() {
       if (err) throw err;
 
       console.log("1 new employee added: " + answer.first_name + " " + answer.last_name);
+      employeeDB();
+    }) 
+  })
+};
+
+//Add role 
+function addRole() {
+  inquirer.prompt([
+    {
+      name: "addRole",
+      type: "input", 
+      message: "What is the name of the role?"
+    },
+    {
+      name: "addRoleSalary",
+      type: "input", 
+      message: "What is the salary of the role?"
+    },
+    {
+      name: "addRoleDeptId",
+      type: "input", 
+      message: "What is the department ID of the role?"
+    },
+  ]).then(function(answer) {
+    db.query(`INSERT INTO roles (title, salary, department_id) VALUES ('${answer.addRole}', '${answer.addRoleSalary}', '${answer.addRoleDeptId}')`, (err, res) => {
+      if (err) throw err;
+      console.log("1 new role added: " + answer.addRole + " " + answer.addRoleSalary);
       employeeDB();
     }) 
   })
