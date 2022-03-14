@@ -182,3 +182,40 @@ function addDepartment() {
     }) 
   })
 };
+//Update employee
+function updateEmployeeRole() {
+  db.query("SELECT * FROM employee", (err, res) => {
+    if (err) throw err;
+ 
+  inquirer.prompt([
+   {
+     name: "selectEmp",
+     type: "list", 
+     message: "Which employee would you like to update?",
+     choices: res.map(res => res.role_id + " " + res.first_name + " " + res.last_name)
+   },
+  ]).then(employee => {
+    let empId = employee.selectEmp.split('')[0];
+
+    db.query("SELECT * FROM employee", (err, res) => {
+      if (err) throw err;
+      inquirer.prompt([
+        {
+          name: "newRole", 
+          type: "list", 
+          message: "What is the new role id:",
+          choices: ["1", "2", "3", "4", "5"]
+        },
+      ]).then(newRole => {
+        let roleId = newRole.newRole.split("")[0];
+        console.log("New role changed to:" + roleId);
+        db.query("UPDATE employee SET role_id = ? WHERE id = ?", [roleId, empId],
+        (err, res) => {
+          if (err) throw err;
+        }
+        );
+        employeeDB();
+      });
+    });
+});
+})};
