@@ -134,7 +134,7 @@ function addEmployee() {
     db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answer.first_name}', '${answer.last_name}', ${answer.role_id}, ${answer.manager_id})`, (err, res) => {
       if (err) throw err;
 
-      console.log("1 new employee added: " + answer.first_name + " " + answer.last_name);
+      console.log("New employee added: " + answer.first_name + " " + answer.last_name);
       employeeDB();
     }) 
   })
@@ -161,7 +161,23 @@ function addRole() {
   ]).then(function(answer) {
     db.query(`INSERT INTO roles (title, salary, department_id) VALUES ('${answer.addRole}', '${answer.addRoleSalary}', '${answer.addRoleDeptId}')`, (err, res) => {
       if (err) throw err;
-      console.log("1 new role added: " + answer.addRole + " " + answer.addRoleSalary);
+      console.log("New role added: " + answer.addRole + " " + answer.addRoleSalary);
+      employeeDB();
+    }) 
+  })
+};
+//Add department
+function addDepartment() {
+  inquirer.prompt([
+    {
+      name: "addDept",
+      type: "input",
+      message: "What is the name of the department?"
+    },
+  ]).then(function(answer) {
+    db.query(`INSERT INTO department (name) VALUES ('${answer.addDept}')`, (err, res) => {
+      if (err) throw err;
+      console.log("New department added: " + answer.addDept);
       employeeDB();
     }) 
   })
